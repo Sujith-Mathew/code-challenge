@@ -3,6 +3,7 @@ using System.Linq;
 using Xunit;
 using Moq;
 using System.IO;
+using System;
 
 namespace dotnet_code_challenge.Test
 {
@@ -26,6 +27,17 @@ namespace dotnet_code_challenge.Test
             var horses = strategy.ProcessFilesInDirectory(inputFolderPath);
 
             Assert.Equal("Test1", horses.First().Name);
+        }
+
+        [Fact]
+        public void ValidateProcessFilesInDirectoryWithInvalidPath()
+        {
+            var caulfieldParserMock = new Mock<IFeedDataParser>();
+            var wolferhamptonParserMock = new Mock<IFeedDataParser>();
+
+            var strategy = new FeedDataParserStrategy(caulfieldParserMock.Object, wolferhamptonParserMock.Object);
+
+            Assert.Throws<ArgumentException>(() => strategy.ProcessFilesInDirectory("sometestjkhkasf"));
         }
     }
 }

@@ -19,7 +19,17 @@ namespace dotnet_code_challenge.Test
             Assert.Contains(horses, h => h.Name == "Coronel" && h.Price == 12);
         }
 
+        [Fact]
+        public void VerifyParseHorseDataWithInvalidFeedDataFile()
+        {
+            var testFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"TestFeedDataFiles\InvalidXml.xml");
+            Assert.True(File.Exists(testFilePath));
 
+            var xmlParser = new CaulfieldXmlParserV1();
 
+            Assert.Throws<FeedDataParsingException>(() => xmlParser.ParseHorseData(testFilePath));
+        }
+
+        //TODO: Add tests for invalid price format.
     }
 }

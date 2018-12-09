@@ -20,10 +20,14 @@ namespace dotnet_code_challenge.Test
         }
 
         [Fact]
-        
         public void VerifyParseHorseDataWithInvalidFeedDataJsonFileFormat()
         {
+            var testFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"TestFeedDataFiles\InvalidJson.json");
+            Assert.True(File.Exists(testFilePath));
 
+            var jsonParser = new WolferhamptonJsonParserV1();
+
+            Assert.Throws<FeedDataParsingException>(() => jsonParser.ParseHorseData(testFilePath));
         }
     }
 }
